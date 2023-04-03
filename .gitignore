@@ -38,6 +38,7 @@ bower_components
 build/Release
 
 # Dependency directories
+.wwebjs_auth/
 node_modules/
 jspm_packages/
 
