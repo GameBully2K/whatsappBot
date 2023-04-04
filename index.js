@@ -35,9 +35,7 @@ client.on('message', async message => {
 			const contact = await message.getContact();
 			client.sendMessage('212687053026@c.us', 'ra jak msg mn end '+ contact.pushname);
 			break;
-		case '3':
-			client.sendMessage(message.from, 'test');
-			break;
+
 	}
 });
 
