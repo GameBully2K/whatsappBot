@@ -27,7 +27,7 @@ client.on ( 'message' , async message => {
 });
 
 client.on ( 'message' , async message => {
-	if (message.body == 'Robot' ||message.body == 'robot' ){
+	if (message.body == 'Bot' ||message.body == 'bot' ){
 		client.sendMessage(message.from,'مرحبا أنا بوت تاع بلال عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ')
 	}
 });
@@ -71,7 +71,7 @@ client.on('message', async message => {
 			}
 			break;
 		case '3':
-			client.sendMessage(message.from, 'حسنا انتضر للحظة');
+			client.sendMessage(message.from, 'حسنا انتظر');
 			client.sendMessage('212687053026@c.us', 'ra jak msg mn end '+ contact.pushname);
 			client.sendMessage('212687053026@c.us', 'push workin');
 			client.sendMessage(message.from, 'تم إعلام بلال! إنه قادم');
