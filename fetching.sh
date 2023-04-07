@@ -1,15 +1,16 @@
 #!/bin/bash
+cp index.js /home/ubuntu/.cache/indexcp.js
 
-cp index.js /home/ubuntu/.cache/index.js
-file="/home/ubuntu/.cache/index.js"
-
+copy=/home/ubuntu/.cache/indexcp.js
 git fetch
 git pull
+file=index.js
 
-file1="/home/ubuntu/dev/whatsappBot/index.js"
-
-if ! cmp -s "$file" "$file1"; then
-	forever restart index.js
+if ! cmp -s "$file" "$copy"; then
+        killall node
+	#sudo reboot
+	sleep 2
+	nohup node index.js &
 fi
 
-rm /home/ubuntu/.cache/index.js
+rm /home/ubuntu/.cache/indexcp.js

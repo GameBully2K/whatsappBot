@@ -27,8 +27,8 @@ client.on ( 'message' , async message => {
 });
 
 client.on ( 'message' , async message => {
-	if (message.body == 'Bot' ||message.body == 'bot' ){
-		client.sendMessage(message.from,'مرحبا أنا بوت تاع بلال عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ')
+	if (message.body == 'Robot' ||message.body == 'robot' ){
+		client.sendMessage(message.from,'مرحبا أنا روبوت تاع بلال عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ')
 	}
 });
 
