@@ -36,7 +36,7 @@ client.on('message', async message => {
 	const contact = await message.getContact();
 	switch(message.body) {
 		case '1':	
-			client.sendMessage(message.from,'أدخل كلمة add task متبوعا بفحوى المهمة');
+			client.sendMessage(message.from,'أدخل كلمة add task متبوعة بفحوى المهمة');
 			break;
 		case '2':
 			client.sendMessage(message.from, 'جاري التحميل');
