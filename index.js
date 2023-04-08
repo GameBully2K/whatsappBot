@@ -74,7 +74,10 @@ client.on('message', async message => {
 			client.sendMessage(message.from, 'حسنا انتظر');
 			client.sendMessage('212687053026@c.us', 'ra jak msg mn end '+ contact.pushname);
 			client.sendMessage(message.from, 'تم إعلام بلال! إنه قادم');
-			
+			break;
+		
+		case '4':
+			client.sendMessage(message.from, 'success');
 			break;
 
 	}
