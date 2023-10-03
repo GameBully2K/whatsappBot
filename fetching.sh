@@ -8,6 +8,7 @@ git pull
 file=/home/ubuntu/dev/whatsappBot/index.js
 
 if ! cmp -s "$file" "$copy"; then
+	rm /home/ubuntu/.cache/indexcp.js
 	reboot
 fi
 

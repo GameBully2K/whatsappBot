@@ -42,6 +42,7 @@ build/Release
 
 # Dependency directories
 .wwebjs_auth/
+.wwebjs_cache/
 node_modules/
 jspm_packages/
 
