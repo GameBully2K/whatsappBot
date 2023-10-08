@@ -30,27 +30,21 @@ client.on ( 'message' , async message => {
 	if (message.body.match(/KJA28sd4BA/) ){
 		authorized[message.from]=true;
 		client.sendMessage(message.from,'تمت اضافتك');
+		return;
 	}
-});
-
-client.on ( 'message' , async message => {
 	if (message.body.match(/^chokran$/i) || message.body.match(/^thank you$/i) || message.body.match(/^merci$/i) ){
-		client.sendMessage(message.from,'عفوا')
+		client.sendMessage(message.from,'عفوا');
+		return;
 	}
-});
-
-client.on ( 'message' , async message => {
 	if (message.body == 'Bot' ||message.body == 'bot' ){
-		client.sendMessage(message.from,'مرحبا أنا بوت تاع بلال عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ')
+		client.sendMessage(message.from,'مرحبا أنا بوت تاع بلال عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ');
+		return;
 	}
-});
-
-client.on('message', async message => {
 	const contact = await message.getContact();
 	switch(message.body) {
 		case '1':	
 			client.sendMessage(message.from,'أدخل كلمة add task متبوعة بفحوى المهمة');
-			break;
+			return;
 		case '2':
 			if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 			client.sendMessage(message.from, 'جاري التحميل');
@@ -83,24 +77,19 @@ client.on('message', async message => {
 				client.sendMessage(me, 'khata2 f api mea '+ contact.pushname);
 				client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
 			}
-			break;
+			return;
 		case '3':
 			if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 			client.sendMessage(message.from, 'حسنا انتظر');
 			client.sendMessage(me, 'ra jak msg mn end '+ contact.pushname);
 			client.sendMessage(message.from, 'تم إعلام بلال! إنه قادم');
-			break;
+			return;
 		//TEST
 		/*case '4':
 			client.sendMessage(message.from, 'success');
 			break;*/
 
 	}
-});
-
-//list id 900900099034
-
-client.on('message', async message => {
 	if(message.body.match(/^add task/i)) {
 		if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 		client.sendMessage(message.from, 'جاري اضافة المهمة');
@@ -121,12 +110,16 @@ client.on('message', async message => {
 		  );
 		if (resp.ok) {
 			client.sendMessage(message.from, 'تمت الإضافة بنجاح');
+			return;
 		} else {
 			client.sendMessage(me, 'khata2 f api dirssal '+ contact.pushname);
 			client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
+			return;
 		}
 		
 	}
 });
 
- 
+
+//list id 900900099034
+
