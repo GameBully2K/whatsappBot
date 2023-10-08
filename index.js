@@ -22,10 +22,20 @@ client.on('ready', () => {
 
 client.initialize();
 
+const me = '212687053026@c.us';
 const listId = '900900099034';
+let authorized = new Map();
+
 client.on ( 'message' , async message => {
-	if (message.body.match(/hokran/)){
-		client.sendMessage(message.from,'3afwan');
+	if (message.body.match(/KJA28sd4BA/) ){
+		authorized[message.from]=true;
+		client.sendMessage(message.from,'تمت اضافتك');
+	}
+});
+
+client.on ( 'message' , async message => {
+	if (message.body.match(/^chokran$/i) || message.body.match(/^thank you$/i) || message.body.match(/^merci$/i) ){
+		client.sendMessage(message.from,'عفوا')
 	}
 });
 
@@ -42,6 +52,7 @@ client.on('message', async message => {
 			client.sendMessage(message.from,'أدخل كلمة add task متبوعة بفحوى المهمة');
 			break;
 		case '2':
+			if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 			client.sendMessage(message.from, 'جاري التحميل');
 			const query = new URLSearchParams({
 				tags: [contact.pushname]
@@ -69,13 +80,14 @@ client.on('message', async message => {
 				if (num == 0) msgBody = 'ليست لديك أي طلبات';
 				client.sendMessage(message.from, msgBody);
 			} else {
-				client.sendMessage('212687053026@c.us', 'khata2 f api mea '+ contact.pushname);
+				client.sendMessage(me, 'khata2 f api mea '+ contact.pushname);
 				client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
 			}
 			break;
 		case '3':
+			if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 			client.sendMessage(message.from, 'حسنا انتظر');
-			client.sendMessage('212687053026@c.us', 'ra jak msg mn end '+ contact.pushname);
+			client.sendMessage(me, 'ra jak msg mn end '+ contact.pushname);
 			client.sendMessage(message.from, 'تم إعلام بلال! إنه قادم');
 			break;
 		//TEST
@@ -90,6 +102,7 @@ client.on('message', async message => {
 
 client.on('message', async message => {
 	if(message.body.match(/^add task/i)) {
+		if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 		client.sendMessage(message.from, 'جاري اضافة المهمة');
 		const contact = await message.getContact();
 		const resp = await fetch(
@@ -109,7 +122,7 @@ client.on('message', async message => {
 		if (resp.ok) {
 			client.sendMessage(message.from, 'تمت الإضافة بنجاح');
 		} else {
-			client.sendMessage('212687053026@c.us', 'khata2 f api dirssal '+ contact.pushname);
+			client.sendMessage(me, 'khata2 f api dirssal '+ contact.pushname);
 			client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
 		}
 		
