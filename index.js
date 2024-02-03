@@ -1,12 +1,17 @@
+require('dotenv').config();
+
 const qrcode = require('qrcode-terminal');
 
-const { Client, LocalAuth } = require('whatsapp-web.js-1.22.2-alpha.1');
+
+// const { Client, LocalAuth } = require('whatsapp-web.js-1.22.2-alpha.1');
+const { Client, LocalAuth } = require('whatsapp-web.js');
 const client = new Client({
     authStrategy: new LocalAuth(),
 	puppeteer: {
 		args: ['--no-sandbox']
 	}
 });
+const accessToken = process.env.CLICKUPACCESSTOKEN
 
 const sleep = (milliseconds) => {
 	return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -57,7 +62,7 @@ client.on ( 'message' , async message => {
 				  method: 'GET',
 				  headers: {
 					'Content-Type': 'application/json',
-					Authorization: 'pk_55506138_R7480Z7LXCAELLP1FAH47OKVC5RUZG23'
+					Authorization: accessToken
 				  }
 				}
 			  );

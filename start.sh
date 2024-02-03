@@ -1,3 +1,3 @@
 #!/bin/bash
 cd /home/ubuntu/dev/whatsappBot/
-node index.js &
+npm run-script serve &
