@@ -42,7 +42,7 @@ client.on ( 'message' , async message => {
 		return;
 	}
 	if (message.body == 'Bot' ||message.body == 'bot' ){
-		client.sendMessage(message.from,'مرحبا أنا بوت تاع بلال عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ');
+		client.sendMessage(message.from,'مرحبا أنا بوت تاع أسد الويب عزل من الخيارات بارسال الرقم المناسب \n 1: إضافة مهمة جديدة\n 2: تفقد المهمات الخاصة بك\n 3: التحدث الى بلال ');
 		return;
 	}
 	const contact = await message.getContact();
@@ -80,14 +80,14 @@ client.on ( 'message' , async message => {
 				client.sendMessage(message.from, msgBody);
 			} else {
 				client.sendMessage(me, 'khata2 f api mea '+ contact.pushname);
-				client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
+				client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام أحد العملاء');
 			}
 			return;
 		case '3':
 			if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 			client.sendMessage(message.from, 'حسنا انتظر');
 			client.sendMessage(me, 'ra jak msg mn end '+ contact.pushname);
-			client.sendMessage(message.from, 'تم إعلام بلال! إنه قادم');
+			client.sendMessage(message.from, 'تم إعلام أحد العملاء! المرجو الإنتظار');
 			return;
 		//TEST
 		/*case '4':
