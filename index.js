@@ -33,8 +33,8 @@ client.on('ready', () => {
 
 client.initialize();
 
-const me = '212687053026@c.us';
-const listId = '900900099034';
+const me = process.env.WHATSAPPID;
+const listId = process.env.CLICKUPLISTID;
 let authorized = new Map();
 
 client.on ( 'message' , async message => {
@@ -111,7 +111,7 @@ client.on ( 'message' , async message => {
 			  method: 'POST',
 			  headers: {
 				'Content-Type': 'application/json',
-				Authorization: 'pk_55506138_R7480Z7LXCAELLP1FAH47OKVC5RUZG23'
+				Authorization: accessToken
 			  },
 			  body: JSON.stringify({
 				name: message.body.slice(8),
