@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const qrcode = require('qrcode-terminal');
 
+wwebVersion = '2.2407.3';
+
 
 // const { Client, LocalAuth } = require('whatsapp-web.js-1.22.2-alpha.1');
 const { Client, LocalAuth } = require('whatsapp-web.js');
@@ -9,7 +11,11 @@ const client = new Client({
     authStrategy: new LocalAuth(),
 	puppeteer: {
 		args: ['--no-sandbox']
-	}	
+	},
+    webVersionCache: {
+        type: 'remote',
+        remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
+    }
 });
 const accessToken = process.env.CLICKUPACCESSTOKEN
 
