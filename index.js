@@ -9,12 +9,7 @@ const client = new Client({
     authStrategy: new LocalAuth(),
 	puppeteer: {
 		args: ['--no-sandbox']
-	},
-	webVersionCache:
-	{
-		remotePath: 'URL PATH HERE',
-		type: 'remote' 
-	}
+	}	
 });
 const accessToken = process.env.CLICKUPACCESSTOKEN
 
