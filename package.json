@@ -12,7 +12,8 @@
   "dependencies": {
     "dotenv": "^16.4.1",
     "nodemon": "^3.0.3",
+    "puppeteer": "^22.14.0",
     "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.22.2-alpha.1"
+    "whatsapp-web.js": "^1.25.0"
   }
 }
