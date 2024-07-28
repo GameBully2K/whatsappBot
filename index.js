@@ -18,6 +18,7 @@ const client = new Client({
     }
 });
 const accessToken = process.env.CLICKUPACCESSTOKEN
+const password = process.env.PASSWORD
 
 const sleep = (milliseconds) => {
 	return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -38,7 +39,7 @@ const listId = process.env.CLICKUPLISTID;
 let authorized = new Map();
 
 client.on ( 'message' , async message => {
-	if (message.body.match(/KJA28sd4BA/) ){
+	if (message.body.includes(password) ){
 		authorized[message.from]=true;
 		client.sendMessage(message.from,'تمت اضافتك');
 		return;
