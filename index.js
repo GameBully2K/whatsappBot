@@ -1,12 +1,14 @@
-require('dotenv').config();
-
-const qrcode = require('qrcode-terminal');
-
-wwebVersion = '2.2407.3';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 // const { Client, LocalAuth } = require('whatsapp-web.js-1.22.2-alpha.1');
-const { Client, LocalAuth } = require('whatsapp-web.js');
+import qrcode from 'qrcode-terminal';
+import { redisClient } from './redis.js';
+import pkg from 'whatsapp-web.js';
+const { Client, LocalAuth } = pkg;
+
+const wwebVersion = '2.2407.3';
 const client = new Client({
     authStrategy: new LocalAuth(),
 	puppeteer: {
@@ -121,7 +123,7 @@ client.on ( 'message' , async message => {
 			}
 		  );
 		if (resp.ok) {
-			client.sendMessage(message.from, 'تمت الإضافة بنجاح');
+			client.sendMessage(message.from, 'تمت الإضافة بنجاح\n رابط المهمة: ' + (await resp.json()).url);
 			return;
 		} else {
 			client.sendMessage(me, 'khata2 f api dirssal '+ contact.pushname);
@@ -129,6 +131,67 @@ client.on ( 'message' , async message => {
 			return;
 		}
 		
+	}
+	if (message.body.match(/^Aichat/i) || message.body.match(/^aichat/i) ){
+		if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
+		if (await redisClient.exists(message.from+"_count")) {
+			if (await redisClient.get(message.from+"_count") > 20) {
+				client.sendMessage(message.from,'لقد تجاوزت الحد الأقصى للمحادثات اليومية');
+				await redisClient.del(message.from+"_count");
+				await redisClient.del(message.from);				
+				return;
+			}
+		}
+		client.sendMessage(message.from,'... أنا أفكر');
+		let conversation = ""
+
+		//{"role":"user","content":"5+5"}
+		if (await redisClient.exists(message.from)) {
+			const oldConversation = await redisClient.get(message.from)
+			conversation = oldConversation+',{"role":"user","content":'+JSON.stringify(message.body.slice(7))+'}'
+		} else {
+			conversation = '{"role":"user","content":'+JSON.stringify(message.body.slice(7))+'}'
+		}
+
+		console.log(conversation);
+
+
+
+		const options = {
+			method: 'POST',
+			headers: {
+			  'Content-Type': 'application/json',
+			  'Authorization': 'Bearer '+process.env.CLOUDFLAREAPIKEY
+			},
+			body: '{"messages":['+conversation+']}'
+		  };
+		  
+		  try{
+			const response = await fetch('https://api.cloudflare.com/client/v4/accounts/'+ process.env.CLOUDFLAREACCOUNTID +'/ai/run/@cf/meta/llama-3.1-8b-instruct', options)
+			const data = await response.json();
+			console.log(data);
+			if (!data.success) {
+				client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
+				return;
+			}
+			client.sendMessage(message.from, data.result.response);
+			await redisClient.set(
+				message.from+"_count",
+				await redisClient.exists(message.from+"_count") ? (parseInt(redisClient.get(message.from+"_count"))+1).toString() : 1
+			).then(() => {
+				// Set expiration to 10 seconds
+				redisClient.expire(message.from+"_count", 86400);
+			})
+			const text= JSON.stringify(data.result.response)
+			console.log(text.replace("\n    *", " "));
+			conversation +=',{"role":"assistant","content":'+text+'}'
+			await redisClient.set(message.from, conversation)
+			
+		  } catch (error) {
+			console.error('Error:', error);
+			client.sendMessage(message.from, 'حدث خطأ ما! تم اعلام بلال');
+		  }
+		return;
 	}
 });
 
