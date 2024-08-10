@@ -177,7 +177,7 @@ client.on ( 'message' , async message => {
 			client.sendMessage(message.from, data.result.response);
 			await redisClient.set(
 				message.from+"_count",
-				await redisClient.exists(message.from+"_count") ? (parseInt(redisClient.get(message.from+"_count"))+1).toString() : 1
+				await redisClient.exists(message.from+"_count") ? (parseInt(await redisClient.get(message.from+"_count"))+1).toString() : 1
 			).then(() => {
 				// Set expiration to 10 seconds
 				redisClient.expire(message.from+"_count", 86400);
