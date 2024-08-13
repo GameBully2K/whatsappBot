@@ -135,7 +135,7 @@ client.on ( 'message' , async message => {
 	if (message.body.match(/^Aichat/i) || message.body.match(/^aichat/i) ){
 		//if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
 		const oldConversation = await redisClient.get(message.from) ?? "";
-		if (oldConversation.length > (10*1024) ) {
+		if (oldConversation.length > (40*1024) ) {
 			redisClient.del(message.from);
 			client.sendMessage(message.from,'لقد تجاوزت الحد الأقصى للمحادثات. تمت اعادة المحادثة');			
 		}
