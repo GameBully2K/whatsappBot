@@ -133,21 +133,28 @@ client.on ( 'message' , async message => {
 		
 	}
 	if (message.body.match(/^Aichat/i) || message.body.match(/^aichat/i) ){
-		if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
+		//if (!authorized[message.from]) return client.sendMessage(message.from,'غير مرخص, أدخل الرمز السري');
+		const oldConversation = await redisClient.get(message.from) ?? "";
+		if (oldConversation.length > (10*1024) ) {
+			redisClient.del(message.from);
+			client.sendMessage(message.from,'لقد تجاوزت الحد الأقصى للمحادثات. تمت اعادة المحادثة');			
+		}
 		if (await redisClient.exists(message.from+"_count")) {
 			if (await redisClient.get(message.from+"_count") > 20) {
-				client.sendMessage(message.from,'لقد تجاوزت الحد الأقصى للمحادثات اليومية');
-				await redisClient.del(message.from+"_count");
-				await redisClient.del(message.from);				
+				client.sendMessage(message.from,'لقد تجاوزت الحد الأقصى للمحادثات اليومية. عد غدا مع 7 صباحا أو اشترك في الخدمة اللامحدودة');		
 				return;
 			}
+		}
+		if (message.body.match(/^Aichat clear/i)) {
+			await redisClient.del(message.from);
+			client.sendMessage(message.from,'تم مسح المحادثة');
+			return;
 		}
 		client.sendMessage(message.from,'... أنا أفكر');
 		let conversation = ""
 
 		//{"role":"user","content":"5+5"}
 		if (await redisClient.exists(message.from)) {
-			const oldConversation = await redisClient.get(message.from)
 			conversation = oldConversation+',{"role":"user","content":'+JSON.stringify(message.body.slice(7))+'}'
 		} else {
 			conversation = '{"role":"user","content":'+JSON.stringify(message.body.slice(7))+'}'
