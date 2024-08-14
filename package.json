@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.1",
+    "fs": "^0.0.1-security",
     "nodemon": "^3.0.3",
     "puppeteer": "^22.14.0",
     "qrcode-terminal": "^0.12.0",
